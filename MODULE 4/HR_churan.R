@@ -1,0 +1,15 @@
+data=read.csv("C:/Users/janeesh/OneDrive/Desktop/R/data/HR_Emp_churn.csv")
+View(data)
+str(data)
+sapply(data,function(x)sum(is.na(x)))
+data$Departments<-as.factor(data$Departments)
+data$salary<-as.factor(data$salary)
+summary(data)
+library(caTools)
+intrain<- sample.split(data$left,SplitRatio =0.7)
+set.seed(2017)
+training<- data[intrain,]
+testing<- data[-intrain,]
+dim(training); dim(testing)
+LogModel <- glm(left ~ .,family=binomial(link="logit"),data=training)
+print(summary(LogModel))
